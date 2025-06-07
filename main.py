@@ -90,13 +90,12 @@ class UI:
     #CRUD de cliente
     @staticmethod
     def cliente_inserir():#Create
-        id = 0
         nome = input("Informe seu nome: ")
         email = input("Informe seu email: ")
         fone = input("Informe seu telefone: ")
         #x = Cliente(id, nome, email, fone)
         #Clientes.inserir(x)
-        View.cliente_inserir(id, nome, email, fone)
+        View.cliente_inserir(nome, email, fone)
 
     
     @staticmethod
@@ -105,7 +104,7 @@ class UI:
         id = int(input("Informe o ID do cliente que será excluído: "))
         #c = Cliente(id, "", "", "")
         #Clientes.excluir(c)
-        View.cliente_excluir(id, "", "", "")
+        View.cliente_excluir(id)
 
 
     @staticmethod
@@ -141,7 +140,7 @@ class UI:
     def categoria_excluir():#Delete
         UI.categoria_listar
         id = int(input("Informe o ID da categoria que será excluída: "))
-        View.categoria_excluir(id, "")
+        View.categoria_excluir(id)
 
 
     @staticmethod
@@ -175,7 +174,7 @@ class UI:
     def produto_excluir():#Delete
         UI.produto_listar
         id = int(input("Informe o ID do produto que será excluído: "))
-        View.produto_excluir(id, "", "", "", "")
+        View.produto_excluir(id)
 
 
     @staticmethod
@@ -219,7 +218,7 @@ class UI:
             UI.produto_listar()
             id_produto = int(input("Informe o id do produto desejado: "))
             qtd = int(input("Informe a quantidade desejada: "))
-            View.inserir_no_carrinho(id_produto, qtd)
+            View.inserir_no_carrinho(cls.carrinho, id_produto, qtd)
             """
             preco = float(Produtos.listar_id(id_produto).preco)
             vi = VendaItem(0, qtd, preco)

@@ -3,52 +3,91 @@ import json
 class Cliente:
 
     def __init__(self, id, nome, email, fone):
-        self.__id = id
-        self.__nome = nome
-        self.__email = email
-        self.__fone = fone
-        #senha
+        self.set_id(id)
+        self.set_nome(nome)
+        self.set_email(email)
+        self.set_fone(fone)
 
+    def to_json(self):
+        return {
+            "id": self.get_id(),
+            "nome": self.get_nome(),
+            "email": self.get_email(),
+            "fone": self.get_fone()
+        }
+
+    def set_id(self, id):
+        if id < 0 or id == "":
+            raise ValueError("ID não pode ser negativo nem vazio")
+        else:
+            self.__id = id
+
+    def get_id(self):
+        return int(self.__id)
+
+    def set_nome(self, nome):
+        if nome == "":
+            raise ValueError("Nome não pode ser vazio")
+        else:
+            self.__nome = nome
+
+    def get_nome(self):
+        return self.__nome
+
+    def set_email(self, email):
+        if email == 'admin':
+            self.__email = email
+        elif "@" not in email or email == "":
+            raise ValueError("Email inválido")
+        else:
+            self.__email = email
+
+    def get_email(self):
+        return self.__email
+
+    def set_fone(self, fone):
+        if fone == "":
+            raise ValueError("Telefone não pode ser vazio")
+        else:
+            self.__fone = fone
+
+    def get_fone(self):
+        return self.__fone
 
     def __str__(self):
         return f"{self.__id} - {self.__nome} - {self.__email} - {self.__fone}"
-    
 
 class Clientes:
 
     objetos = []
 
-
     @classmethod
     def inserir(cls, obj):
         cls.abrir()
         if cls.objetos:
-            maior = max(cliente.id for cliente in cls.objetos)
-            obj.id = maior + 1
+            maior = max(cliente.get_id() for cliente in cls.objetos)
+            obj.set_id(maior + 1)
         else:
-            obj.id = 0
+            obj.set_id(0)
         cls.objetos.append(obj)
         cls.salvar() 
-
 
     @classmethod
     def listar(cls):
         cls.abrir()
         return cls.objetos
-    
 
     @classmethod
     def listar_id(cls, id):
         cls.abrir()
         for obj in cls.objetos:
-            if obj.id == id:
+            if obj.get_id() == id:
                 return obj
         return None
-    
 
     @classmethod
     def atualizar(cls, obj):
-        x = cls.listar_id(obj.id)
+        x = cls.listar_id(obj.get_id())
         if x != None: 
             cls.objetos.remove(x)
             cls.objetos.append(obj)
@@ -56,26 +95,24 @@ class Clientes:
 
     @classmethod
     def excluir(cls, obj):
-        x = cls.listar_id(obj.id)
+        x = cls.listar_id(obj.get_id())
         if x != None: 
             cls.objetos.remove(x)
             cls.salvar()
-    
-    
+
     @classmethod
     def abrir(cls):
         cls.objetos = []
-        try:    
+        try:
             with open("clientes.json", mode="r") as arquivo:
                 s = json.load(arquivo)
-                for dic in s: 
-                    c = Cliente(dic["id"], dic["nome"], dic["email"], dic["fone"])#mexer aqui
+                for dic in s:
+                    c = Cliente(dic["id"], dic["nome"], dic["email"], dic["fone"])
                     cls.objetos.append(c)
-        except FileNotFoundError:
+        except (FileNotFoundError, json.JSONDecodeError):
             pass
-
 
     @classmethod
     def salvar(cls):
         with open("clientes.json", mode="w") as arquivo:
-            json.dump(cls.objetos, arquivo, default = vars)
+            json.dump([c.to_json() for c in cls.objetos], arquivo)
