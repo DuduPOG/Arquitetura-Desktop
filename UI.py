@@ -12,8 +12,8 @@ class UI():
             print("\nO que você deseja fazer?")
             print("1. Abrir uma conta")
             print("2. Entrar no sistema\n")
-            interacao_visitante = input("Digite o número da opção desejada: ")
-            UI.menu(estado, interacao_visitante)
+            op = input("Digite o número da opção desejada: ")
+            UI.menu(estado, op)
         
         # Loop para o cliente
         while estado == 1:
@@ -49,77 +49,76 @@ class UI():
             print("13. listar produto")
             print("14. reajustar o preço dos produtos\n")
             print("15. Sair do sistema\n")
-            interacao_administrador = input("Digite o número da opção desejada: ")
-            UI.menu(estado , interacao_administrador)
+            interacao_administrador = int(input("Digite o número da opção desejada: "))
+            UI.menu(estado, interacao_administrador)
         
 #----------------------------------------------------------------      
 # Método para gerenciar o menu de acordo com o estado e a opção escolhida
 
     @staticmethod
     def menu(estado, op):
-        opcao = op
         if estado == 0:
-            if opcao == "1":
-                return UI.Cliente_Inserir()
-            elif opcao == "2":
-                return UI.login()
+            if op == 1:
+                UI.Cliente_Inserir()
+            elif op == 2:
+                UI.verificar_estado()
             else:
                 print("Opção inválida. Tente novamente.")
-                return UI.main(0)        
+                UI.main(0)        
         
         if estado == 1:
-            if opcao == "1":
-                return UI.Carrinho_Inserir()
-            elif opcao == "2":
-                return UI.produto_listar()
-            elif opcao == "3":
-                return UI.inserir_no_carrinho()
-            elif opcao == "4":
-                return UI.visualizar_carrinho()
-            elif opcao == "5":
-                return UI.confirmar_compra()
-            elif opcao == "6":
-                return UI.listar_carrinho()
-            elif opcao == "7":
-                return UI.deslogar()
+            if op == 1:
+                UI.Carrinho_Inserir()
+            elif op == 2:
+                UI.produto_listar()
+            elif op == 3:
+                UI.inserir_no_carrinho()
+            elif op == 4:
+                UI.visualizar_carrinho()
+            elif op == 5:
+                UI.confirmar_compra()
+            elif op == 6:
+                UI.listar_carrinho()
+            elif op == 7:
+                UI.deslogar()
             else:
                 print("Opção inválida. Tente novamente.")
-                return UI.main(estado)
+                UI.main(estado)
             
         if estado == 2:
-            if opcao == "1":
-                return UI.Carrinho_listar()
-            elif opcao == "2":
-                return UI.Cliente_Inserir()
-            elif opcao == "3":
-                return UI.Cliente_excluir()
-            elif opcao == "4":
-                return UI.Cliente_atualizar()
-            elif opcao == "5":
-                return UI.Cliente_listar()
-            elif opcao == "6":
-                return UI.Categoria_inserir()
-            elif opcao == "7":
-                return UI.Categoria_excluir()
-            elif opcao == "8":
-                return UI.Categoria_atualizar()
-            elif opcao == "9":
-                return UI.Categoria_listar()
-            elif opcao == "10":
-                return UI.Produto_inserir()
-            elif opcao == "11":
-                return UI.Produto_excluir()
-            elif opcao == "12":
-                return UI.Produto_atualizar()
-            elif opcao == "13":
-                return UI.Produto_listar()
-            elif opcao == "14":
-                return UI.reajustar_preco_produtos()
-            elif opcao == "15":
-                return UI.deslogar()
+            if op == 1:
+                UI.Carrinho_listar()
+            elif op == 2:
+                UI.Cliente_Inserir()
+            elif op == 3:
+                UI.Cliente_excluir()
+            elif op == 4:
+                 UI.Cliente_atualizar()
+            elif op == 5:
+                UI.Cliente_listar()
+            elif op == 6:
+                UI.Categoria_inserir()
+            elif op == 7:
+                UI.Categoria_excluir()
+            elif op == 8:
+                UI.Categoria_atualizar()
+            elif op == 9:
+                UI.Categoria_listar()
+            elif op == 10:
+                UI.Produto_inserir()
+            elif op == 11:
+                UI.Produto_excluir()
+            elif op == 12:
+                UI.Produto_atualizar()
+            elif op == 13:
+                UI.Produto_listar()
+            elif op == 14:
+                UI.reajustar_preco_produtos()
+            elif op == 15:
+                UI.deslogar()
             else:
                 print("Opção inválida. Tente novamente.")
-                return UI.main(estado)
+                UI.main(estado)
         
         
 
@@ -234,11 +233,24 @@ class UI():
         View.login_inserir(email,senha)
     
     @staticmethod
-    def login():
-        print("Para entrar no sistema, por favor, insira seus dados:")
-        email = input("Digite seu email: ")
-        senha = input("Digite sua senha: ")
+    def verificar_estado():
+        print("Para entrar no sistema, por favor, insira como você quer entrar:\n1. Cliente\n2. Administrador")
+        estado = int(input("Digite o número da opção desejada: "))
+        if estado == 1:
+            print("Você escolheu entrar como cliente.")
+            return 1
+        elif estado == 2:
+            print("Você escolheu entrar como administrador.")
+            return 2
+        
 
+    @staticmethod
+    def deslogar():
+        print("Deslogando...")
+        estado = 0
+        UI.main(estado)
+
+"""
         # Verifica se o email e senha estão corretos
         for usuario in View.login_listar():
             if usuario['email'] == email and usuario['senha'] == senha:
@@ -254,14 +266,9 @@ class UI():
             else:
                 print("Email ou senha incorretos. Tente novamente.")
                 UI.main(estado)
-            
-    @staticmethod
-    def deslogar():
-        print("Deslogando...")
-        estado = 0
-        UI.main(estado)
+
 #----------------------------------------------------------------
-"""
+
     @staticmethod   
     def Carrinho_Inserir():
         View.iniciar_carrinho()
