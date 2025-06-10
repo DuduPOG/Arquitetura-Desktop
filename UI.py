@@ -1,160 +1,190 @@
 from view import View
+import sys
 
 class UI():
     # estados : 0 = visitante, 1 = cliente, 2 = administrador
     @staticmethod
-    def main(estado):
+    def menu():
         View.cadastrar_admin()
-        estado = 0
-        # Loop para o visitante
-        while estado == 0:
-            print("\nBem-vindo ao sistema de Comercio Eletrônico!")
-            print("\nO que você deseja fazer?")
-            print("1. Abrir uma conta")
-            print("2. Entrar no sistema\n")
-            op = input("Digite o número da opção desejada: ")
-            UI.menu(estado, op)
-        
+        # Loop para o visitante:
+        print("      \nBem-vindo ao sistema de Comercio Eletrônico!")
+        print("      \nO que você deseja fazer?\n")
+        print("   1. Abrir uma conta")
+        print("   2. Entrar no sistema")
+        print("   3. Sair do sistema\n")
+        op = int(input("Digite o número da opção desejada: "))
+        print("")
+        UI.main(op)
+    
+    @staticmethod
+    def menu_estado(estado):
         # Loop para o cliente
         while estado == 1:
-            print("\nSeja bem vindo!\n")
-            print("O que você deseja fazer?")
-            print("1. Criar um carrinho de compras")
-            print("2. Listar produtos disponiveis")
-            print("3. Inserir produtos no carrinhos")
-            print("4. vizualizar carrinho")
-            print("5. Confirmar compra")
-            print("6. Listar minhas compras")
-            print("7. Sair do sistema\n")
-            interacao_cliente = input("Digite o número da opção desejada: ")
-            UI.menu(estado , interacao_cliente)
+            print("-------------------------------------------")
+            print("      Seja bem vindo, cliente !")
+            print("-------------------------------------------")
+            print("\nO que você deseja fazer?\n")
+            print("   1. Criar um carrinho de compras")
+            print("   2. Listar produtos disponiveis")
+            print("   3. Inserir produtos no carrinhos")
+            print("   4. vizualizar carrinho")
+            print("   5. Confirmar compra")
+            print("   6. Listar minhas compras")
+            print("   7. Deslogar\n")
+            op = int(input("Digite o número da opção desejada: "))
+            if not UI.main_estado(estado, op):
+                break
         
         # Loop para o administrador
         # View.cliente_inserir("admin", "admin", "84911223344")
         while estado == 2:
-            print("\nBem-vindo administrador!\n")
-            print("O que você deseja fazer?")
-            print("1. Listar as compras")
-            print("2. Inserir cliente")
-            print("3. Excluir cliente")
-            print("4. Atualizar cliente")
-            print("5. listar cliente")
-            print("\n6. Inserir categoria")
-            print("7. Excluir categoria")
-            print("8. Atualizar categoria")
-            print("9. listar categoria")
-            print("\n10. Inserir produto")
-            print("11. Excluir produto")
-            print("12. Atualizar produto")
-            print("13. listar produto")
-            print("14. reajustar o preço dos produtos\n")
-            print("15. Sair do sistema\n")
-            interacao_administrador = int(input("Digite o número da opção desejada: "))
-            UI.menu(estado, interacao_administrador)
-        
+            print("-------------------------------------------")
+            print("      Bem-vindo administrador !")
+            print("-------------------------------------------")
+            print("\nO que você deseja fazer?\n")
+            print("   1. Listar as compras")
+            print("   2. Inserir cliente")
+            print("   3. Excluir cliente")
+            print("   4. Atualizar cliente")
+            print("   5. listar cliente \n")
+            print("   6. Inserir categoria")
+            print("   7. Excluir categoria")
+            print("   8. Atualizar categoria")
+            print("   9. listar categoria \n")
+            print("   10. Inserir produto")
+            print("   11. Excluir produto")
+            print("   12. Atualizar produto")
+            print("   13. listar produto")
+            print("   14. reajustar o preço dos produtos\n")
+            print("   15. Deslogar\n")
+            op = int(input("Digite o número da opção desejada: "))
+            if not UI.main_estado(estado, op):
+                break
 #----------------------------------------------------------------      
-# Método para gerenciar o menu de acordo com o estado e a opção escolhida
+# Método para gerenciar o menu do visitante
 
     @staticmethod
-    def menu(estado, op):
-        if estado == 0:
-            if op == 1:
-                UI.Cliente_Inserir()
-            elif op == 2:
-                UI.verificar_estado()
-            else:
-                print("Opção inválida. Tente novamente.")
-                UI.main(0)        
-        
+    def main(op):
+        #View.cadastrar_admin()    # retorna a interação do visitante
+        if op == 1:
+            UI.cliente_inserir()
+            UI.iniciar_login()
+            UI.voltar_menu_visita()
+        elif op == 2:
+            UI.entrar_sistema()
+        elif op == 3:
+            UI.sair_sistema()
+
+        else:
+            print("Opção inválida. Tente novamente.")
+            UI.menu()
+                  
+# metodo para gerenciar o menu do cliente e admin
+    @staticmethod
+    def main_estado(estado,op):
         if estado == 1:
+            op = UI.menu_estado(None)
             if op == 1:
-                UI.Carrinho_Inserir()
+                UI.listar_compras()
+                UI.voltar_menu()
             elif op == 2:
                 UI.produto_listar()
+                UI.voltar_menu()
             elif op == 3:
                 UI.inserir_no_carrinho()
+                UI.voltar_menu()
             elif op == 4:
                 UI.visualizar_carrinho()
+                UI.voltar_menu()
             elif op == 5:
                 UI.confirmar_compra()
+                UI.voltar_menu()
             elif op == 6:
                 UI.listar_carrinho()
+                UI.voltar_menu()
             elif op == 7:
                 UI.deslogar()
-            else:
+            
+            if 0 > op > 15:
                 print("Opção inválida. Tente novamente.")
-                UI.main(estado)
+                UI.menu_estado(estado)
+
             
         if estado == 2:
             if op == 1:
-                UI.Carrinho_listar()
+                UI.listar_compras()
+                UI.voltar_menu()
             elif op == 2:
-                UI.Cliente_Inserir()
+                UI.cliente_inserir()
+                UI.voltar_menu()
             elif op == 3:
-                UI.Cliente_excluir()
+                UI.cliente_excluir()
+                UI.voltar_menu()
             elif op == 4:
-                 UI.Cliente_atualizar()
+                UI.cliente_atualizar()
+                UI.voltar_menu()
             elif op == 5:
-                UI.Cliente_listar()
+                UI.cliente_listar()
+                UI.voltar_menu()
             elif op == 6:
-                UI.Categoria_inserir()
+                UI.categoria_inserir()
+                UI.voltar_menu()
             elif op == 7:
-                UI.Categoria_excluir()
+                UI.categoria_excluir()
+                UI.voltar_menu()
             elif op == 8:
-                UI.Categoria_atualizar()
+                UI.categoria_atualizar()
+                UI.voltar_menu()
             elif op == 9:
-                UI.Categoria_listar()
+                UI.categoria_listar()
+                UI.voltar_menu()
             elif op == 10:
-                UI.Produto_inserir()
+                UI.produto_inserir()
+                UI.voltar_menu()
             elif op == 11:
-                UI.Produto_excluir()
+                UI.produto_excluir()
+                UI.voltar_menu()
             elif op == 12:
-                UI.Produto_atualizar()
+                UI.produto_atualizar()
+                UI.voltar_menu()
             elif op == 13:
-                UI.Produto_listar()
+                UI.produto_listar()
+                UI.voltar_menu()
             elif op == 14:
-                UI.reajustar_preco_produtos()
+                UI.reajustar_preco_produto()
+                UI.voltar_menu()
             elif op == 15:
                 UI.deslogar()
-            else:
+                
+            if 0 > op > 15:
                 print("Opção inválida. Tente novamente.")
-                UI.main(estado)
-        
-        
+                UI.menu_estado(estado)
+   
 
+#----------------------------------------------------------------------
 
-#----------------------------------------------------------------
+ #CRUD de cliente
     @staticmethod
-    def Cliente_listar():
-        print("Estes são todos os clientes cadastrados:")
-        #for c in Clientes.listar():
-         #   print(c)
-        for c in View.cliente_listar():
-            print(c)
+    def cliente_inserir():#Create
+        nome = input("Informe o nome: ")
+        email = input("Informe o email: ")
+        fone = input("Informe o telefone: ")
+        #x = Cliente(id, nome, email, fone)
+        #Clientes.inserir(x)
+        View.cliente_inserir(nome, email, fone)
+
     
     @staticmethod
-    def Cliente_Inserir():
-        print("Para criar uma conta, por favor, insira os seguintes dados:")
-        nome = input("Digite seu nome: ")
-        email = input("Digite seu email: ")
-        telefone = input("Digite seu telefone: ")
-        print("Conta criada com sucesso!")
-        View.Cliente_Inserir(nome, email, telefone)
-       
-    
-    @staticmethod
-    def Cliente_excluir():#Delete
-        UI.cliente_listar
-        id = int(input("Informe o ID do cliente que será excluído: "))
-        #c = Cliente(id, "", "", "")
-        #Clientes.excluir(c)
-        View.cliente_excluir(id, "", "", "")
+    def cliente_excluir():#Delete
+        UI.cliente_listar()
+        id = int(input("\nInforme o ID do cliente que será excluído: \n"))
+        View.cliente_excluir(id)
 
 
     @staticmethod
-    def Cliente_atualizar():#Update
-        UI.cliente_listar
-        id = int(input("Informe o ID do cliente a ser atualizado: "))
+    def cliente_atualizar():#Update
+        UI.cliente_listar()
+        id = int(input("\nInforme o ID do cliente a ser atualizado:\n"))
         nome = input("Informe seu novo nome: ")
         email = input("Informe seu novo email: ")
         fone = input("Informe seu novo telefone: ")
@@ -162,38 +192,56 @@ class UI():
         #Clientes.atualizar(c)
         View.cliente_atualizar(id, nome, email, fone)
 
-#----------------------------------------------------------------
+
     @staticmethod
-    def Categoria_inserir():#Create
+    def cliente_listar():#Read
+        print("\n-------------------------------------------")
+        print("Estes são todos os clientes cadastrados:")
+        print("-------------------------------------------\n")
+        #for c in Clientes.listar():
+         #   print(c)
+        for c in View.cliente_listar():
+            print(c)
+        
+            
+        
+
+#----------------------------------------------------------------------
+
+    #CRUD de categoria
+    @staticmethod
+    def categoria_inserir():#Create
         #id = int(input("Informe o ID do cliente: "))
         desc = input("Informe uma descrição para sua categoria: ")
         View.categoria_inserir(desc)
 
     
     @staticmethod
-    def Categoria_excluir():#Delete
-        UI.categoria_listar
+    def categoria_excluir():#Delete
+        UI.categoria_listar()
         id = int(input("Informe o ID da categoria que será excluída: "))
-        View.categoria_excluir(id, "")
+        View.categoria_excluir(id)
 
 
     @staticmethod
-    def Categoria_atualizar():#Update
-        UI.categoria_listar
+    def categoria_atualizar():#Update
+        UI.categoria_listar()
         id = int(input("Informe o ID da categoria a ser atualizada: "))
         desc = input("Informe sua nova descrição: ")
         View.categoria_atualizar(id, desc)
 
 
     @staticmethod
-    def Categoria_listar():#Read
+    def categoria_listar():#Read
         print("Estas são todas as categorias existentes:")
         for c in View.categoria_listar():
             print(c)
 
-#----------------------------------------------------------------
+#----------------------------------------------------------------------
+
+    #CRUD de produto
     @staticmethod
-    def Produto_inserir():#Create
+    def produto_inserir():#Create
         #id = int(input("Informe o ID do cliente: "))
         desc = input("Informe uma descrição para seu produto: ")
         preco = float(input("Informe seu preço: "))
@@ -204,15 +252,15 @@ class UI():
 
     
     @staticmethod
-    def Produto_excluir():#Delete
-        UI.produto_listar
+    def produto_excluir():#Delete
+        UI.produto_listar()
         id = int(input("Informe o ID do produto que será excluído: "))
-        View.produto_excluir(id, "", "", "", "")
+        View.produto_excluir(id)
 
 
     @staticmethod
-    def Produto_atualizar():#Update
-        UI.produto_listar
+    def produto_atualizar():#Update
+        UI.produto_listar()
         id = int(input("Informe o ID do produto a ser atualizado: "))
         desc = input("Informe sua nova descrição: ")
         preco = float(input("Informe seu novo preço: "))
@@ -223,26 +271,108 @@ class UI():
 
 
     @staticmethod
-    def Produto_listar():#Read
+    def produto_listar():#Read
         print("Estes são todos os produtos disponíveis:")
         for c in View.produto_listar():
             print(c)
-#----------------------------------------------------------------
+
     @staticmethod
-    def login_inserir(email,senha):
-        View.login_inserir(email,senha)
+    def reajustar_preco_produto():
+        print("adicionar metodo de reajustar preço")
+        
+
+#----------------------------------------------------------------------
+
+    #CRUD de Venda
+    @classmethod
+    def iniciar_compra(cls):#Create
+        View.iniciar_carrinho(cls)
+
+
+    @staticmethod
+    def listar_compras():#Read
+        View.listar_carrinho()
+
+
+    @classmethod
+    def visualizar_carrinho(cls):#Read
+        View.visualizar_carrinho(cls)
+
+
+    @classmethod
+    def inserir_no_carrinho(cls):
+        if cls.carrinho != None:
+            UI.produto_listar()
+            id_produto = int(input("Informe o id do produto desejado: "))
+            qtd = int(input("Informe a quantidade desejada: "))
+            View.inserir_no_carrinho(cls.carrinho, id_produto, qtd)
+            """
+            preco = float(Produtos.listar_id(id_produto).preco)
+            vi = VendaItem(0, qtd, preco)
+            vi.id_venda = cls.carrinho.id
+            vi.id_produto = id_produto
+            VendaItens.inserir(vi)
+            #atualizar o total da venda (carrinho)
+            subtotal = qtd * preco
+            cls.carrinho.total += subtotal
+            Vendas.atualizar(cls.carrinho)
+            """
+        else:
+            print("Você precisa criar um carrinho primeiro!")
+            return
+
+    @classmethod
+    def confirmar_compra(cls):
+        View.confirmar_compra(cls.carrinho)
+    
+
+#----------------------------------------------------------------------
+
+    #CRUD de login
+    @staticmethod
+    def iniciar_login():#Create
+        user = input("Insira um nome de usuário: ")
+        password = input("Insira uma senha para seu login: ")
+        View.login_inserir(user, password)
+
     
     @staticmethod
-    def verificar_estado():
-        print("Para entrar no sistema, por favor, insira como você quer entrar:\n1. Cliente\n2. Administrador")
-        estado = int(input("Digite o número da opção desejada: "))
-        if estado == 1:
-            print("Você escolheu entrar como cliente.")
-            return 1
-        elif estado == 2:
-            print("Você escolheu entrar como administrador.")
-            return 2
-        
+    def excluir_login():#Delete
+        UI.listar_logins
+        id = int(input("Informe o ID do login que será excluído: "))
+        View.login_excluir(id)
+
+
+    @staticmethod
+    def atualizar_login():#Update
+        UI.listar_logins
+        id = input("Insira o ID do login que será atualizado: ")
+        user = input("Insira um novo nome de usuário: ")
+        password = input("Insira uma nova senha: ")
+        View.login_atualizar(id, user, password)
+
+
+    @staticmethod
+    def listar_logins():#Read
+        print("Estes são todos os logins feitos:")
+        for c in View.login_listar():
+            print(c)
+
+    @staticmethod
+    def entrar_sistema():
+        nome = input("Qual seu nome de usuário:")
+        senha = input("Qual sua senha :")
+        for usuario in View.login_listar():
+            if usuario.get_user() == nome and usuario.get_password() == senha:
+                if nome == "admin" and senha == "admin":
+                    estado = 2
+                else:
+                    estado = 1
+                UI.menu_estado(estado)
+                return  # Interrompe após login bem-sucedido
+
+        print("\nNome ou senha inválidos, tente novamente.\n")
+        UI.menu()  # Volta para o menu de login
 
     @staticmethod
     def deslogar():
@@ -250,70 +380,32 @@ class UI():
         estado = 0
         UI.main(estado)
 
-"""
-        # Verifica se o email e senha estão corretos
-        for usuario in View.login_listar():
-            if usuario['email'] == email and usuario['senha'] == senha:
-                print("Login realizado com sucesso!")
-                estado = 1
-                UI.main(estado) 
-             
-            elif email == "admin" and senha == "84911223344":
-                estado = 2
-                print("Login realizado com sucesso!")
-                UI.main(estado)  
-            
-            else:
-                print("Email ou senha incorretos. Tente novamente.")
-                UI.main(estado)
+    @staticmethod
+    def sair_sistema():
+        print("saindo do sistema...")
+        sys.exit()
 
-#----------------------------------------------------------------
-
-    @staticmethod   
-    def Carrinho_Inserir():
-        View.iniciar_carrinho()
-    
+#admin 
     @staticmethod
-    def produto_listar():
-        View.produto_listar()
-    
-    @staticmethod
-    def Carrinho_Listar():
-        View.listar_carrinho
-    
-    @staticmethod
-    def inserir_no_carrinho():
-        print("Para inserir produtos no carrinho, por favor, insira os seguintes dados:")
-        id_produto = input("Digite o ID do produto: ")
-        quantidade = int(input("Digite a quantidade: "))
-        View.inserir_no_carrinho(id_produto, quantidade)
-    
-    @staticmethod
-    def visualizar_carrinho():
-        View.visualizar_carrinho()
-    
-    @staticmethod
-    def confirmar_compra():
-        View.confirmar_compra()
-    
-
-
-#----------------------------------------------------------------
-    @staticmethod
-    def listar_as_compras():
-        for carrinho in View.listar_carrinho:
-            print(f"Carrinho ID: {carrinho.get_id}, Data do carrinho:{carrinho.get_data().strftime('%d/%m/%Y %H:%M')},Cliente ID: {carrinho.get_id_cliente}, Total: {carrinho.get_total},o carrinho esta ativo: {carrinho.get_carrinho}")
+    def listar_compras():
+        View.listar_carrinho()
 
     @staticmethod
-    def manter_cadastros_produtos():
-   
+    def voltar_menu():
+        resposta = str(input("\nDeseja voltar ao menu? (s/n)\n"))
+        if resposta == "s" :
+            UI.menu_estado(2)
+        elif resposta == "n":
+            UI.sair_sistema()
+        else:
+            print("\nResposta invalida")
+            UI.voltar_menu()
+    
     @staticmethod
-    def manter_cadastros_clientes():
+    def voltar_menu_visita():
+            print("\nConta criada com sucesso")
+            UI.menu()
 
-    @staticmethod
-    def manter_cadastros_categorias():
+UI.menu()
         
-    @staticmethod
-    def reajustar_preco_produtos():
-    """
-UI.main(0)
+
