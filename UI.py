@@ -105,7 +105,7 @@ class UI():
             elif op == 7:
                 UI.deslogar()
             
-            if 0 > op > 15:
+            if op < 0 or op > 15:
                 print("Opção inválida. Tente novamente.")
                 UI.menu_estado(estado)
 

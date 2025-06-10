@@ -31,8 +31,12 @@ class View:
 
     @staticmethod
     def cliente_excluir(id):
-        c = Cliente(id, "", "", "")
-        Clientes.excluir(c)
+        cliente = Clientes.listar_id(id)
+        if cliente is not None:
+            Clientes.excluir(cliente)
+        else:
+            print("Cliente não encontrado!")
+            return
     
     @staticmethod
     def categoria_inserir(desc):
@@ -41,8 +45,12 @@ class View:
 
     @staticmethod
     def categoria_excluir(id):
-        c = Categoria(id, "")
-        Categorias.excluir(c)
+        categoria = Categorias.listar_id(id)
+        if categoria is not None:
+            Categorias.excluir(categoria)
+        else:
+            print("Categoria não encontrada!")
+            return
 
     @staticmethod
     def categoria_atualizar(id, desc):
@@ -60,8 +68,12 @@ class View:
 
     @staticmethod
     def produto_excluir(id):
-        p = Produto(id, "", "", "", "")
-        Produtos.excluir(p)
+        produto = Produtos.listar_id(id)
+        if produto is not None:
+            Produtos.excluir(produto)
+        else:
+            print("Produto não encontrado!")
+            return
 
     @staticmethod
     def produto_atualizar(id, nome, preco, desc, id_categoria):
