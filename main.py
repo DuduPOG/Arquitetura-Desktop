@@ -32,6 +32,7 @@ class UI:
         s += f"          21. Excluir Login;\n"
         s += f"          22. Atualizar Login;\n"
         s += f"          23. Listar Logins;\n"
+        s += f"          24. Reajustar preço de produto;\n"
         s += f"\n          100. Encerrar o programa.\n"
         return int(input(f"{s}\nInsira sua escolha: "))
     
@@ -84,6 +85,8 @@ class UI:
                 UI.atualizar_login()
             elif op == 23:
                 UI.listar_logins()
+            elif op == 24:
+                UI.reajustar_preco()
 
 
 
@@ -93,8 +96,6 @@ class UI:
         nome = input("Informe seu nome: ")
         email = input("Informe seu email: ")
         fone = input("Informe seu telefone: ")
-        #x = Cliente(id, nome, email, fone)
-        #Clientes.inserir(x)
         View.cliente_inserir(nome, email, fone)
 
     
@@ -102,8 +103,6 @@ class UI:
     def cliente_excluir():#Delete
         UI.cliente_listar
         id = int(input("Informe o ID do cliente que será excluído: "))
-        #c = Cliente(id, "", "", "")
-        #Clientes.excluir(c)
         View.cliente_excluir(id)
 
 
@@ -114,16 +113,12 @@ class UI:
         nome = input("Informe seu novo nome: ")
         email = input("Informe seu novo email: ")
         fone = input("Informe seu novo telefone: ")
-        #c = Cliente(id, nome, email, fone)
-        #Clientes.atualizar(c)
         View.cliente_atualizar(id, nome, email, fone)
 
 
     @staticmethod
     def cliente_listar():#Read
         print("Estes são todos os clientes cadastrados:")
-        #for c in Clientes.listar():
-         #   print(c)
         for c in View.cliente_listar():
             print(c)
 
@@ -131,7 +126,6 @@ class UI:
     #CRUD de categoria
     @staticmethod
     def categoria_inserir():#Create
-        #id = int(input("Informe o ID do cliente: "))
         desc = input("Informe uma descrição para sua categoria: ")
         View.categoria_inserir(desc)
 
@@ -161,7 +155,6 @@ class UI:
     #CRUD de produto
     @staticmethod
     def produto_inserir():#Create
-        #id = int(input("Informe o ID do cliente: "))
         desc = input("Informe uma descrição para seu produto: ")
         preco = float(input("Informe seu preço: "))
         estoque = int(input("Informe a quantidade no estoque: "))
@@ -187,6 +180,13 @@ class UI:
         UI.categoria_listar()
         id_categoria = int(input("Informe o ID do novo produto: "))
         View.produto_atualizar(id, desc, preco, estoque, id_categoria)
+
+    @staticmethod
+    def reajustar_preco():
+        UI.produto_listar()
+        id = int(input("Informe o ID do produto que terá o preço reajustado: "))
+        novo_preco = float(input("Informe o novo preço: "))
+        View.produto_reajustar_preco(id, novo_preco)
 
 
     @staticmethod
@@ -219,17 +219,6 @@ class UI:
             id_produto = int(input("Informe o id do produto desejado: "))
             qtd = int(input("Informe a quantidade desejada: "))
             View.inserir_no_carrinho(cls.carrinho, id_produto, qtd)
-            """
-            preco = float(Produtos.listar_id(id_produto).preco)
-            vi = VendaItem(0, qtd, preco)
-            vi.id_venda = cls.carrinho.id
-            vi.id_produto = id_produto
-            VendaItens.inserir(vi)
-            #atualizar o total da venda (carrinho)
-            subtotal = qtd * preco
-            cls.carrinho.total += subtotal
-            Vendas.atualizar(cls.carrinho)
-            """
         else:
             print("Você precisa criar um carrinho primeiro!")
             return
@@ -237,9 +226,6 @@ class UI:
     @classmethod
     def confirmar_compra(cls):
         View.confirmar_compra(cls.carrinho)
-    # dever de casa, na venda (carrinho), colocar o atributo carrinho para False
-    #percorrer os itens da venda (vendaitem.qtd) e baixar o estoque no cadastro de produto (produto.estoque)
-
 
     #CRUD de login
     @staticmethod

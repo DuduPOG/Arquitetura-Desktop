@@ -144,6 +144,16 @@ class View:
                     Produtos.atualizar(produto)
 
     @staticmethod
+    def produto_reajustar_preco(produto, novo_preco):
+        produto = Produtos.listar_id(produto)
+        if produto is not None:
+            produto.set_preco(novo_preco)
+            Produtos.atualizar(produto)
+        else:
+            print("Produto não encontrado!")
+            return
+
+    @staticmethod
     def login_inserir(email, senha):
         l = Login(0, email, senha)
         Logins.inserir(l)
