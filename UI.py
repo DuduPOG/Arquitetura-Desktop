@@ -7,7 +7,9 @@ class UI():
     def menu():
         View.cadastrar_admin()
         # Loop para o visitante:
-        print("      \nBem-vindo ao sistema de Comercio Eletrônico!")
+        print("---------------------------------------------")
+        print("Bem-vindo ao sistema de Comercio Eletrônico!")
+        print("---------------------------------------------")
         print("      \nO que você deseja fazer?\n")
         print("   1. Abrir uma conta")
         print("   2. Entrar no sistema")
@@ -32,8 +34,8 @@ class UI():
             print("   6. Listar minhas compras")
             print("   7. Deslogar\n")
             op = int(input("Digite o número da opção desejada: "))
-            if not UI.main_estado(estado, op):
-                break
+            UI.main_estado(1,op)
+            
         
         # Loop para o administrador
         # View.cliente_inserir("admin", "admin", "84911223344")
@@ -105,7 +107,7 @@ class UI():
             elif op == 7:
                 UI.deslogar()
             
-            if op < 0 or op > 15:
+            else:
                 print("Opção inválida. Tente novamente.")
                 UI.menu_estado(estado)
 
@@ -156,7 +158,7 @@ class UI():
             elif op == 15:
                 UI.deslogar()
                 
-            if 0 > op > 15:
+            else:
                 print("Opção inválida. Tente novamente.")
                 UI.menu_estado(estado)
    
@@ -408,4 +410,3 @@ class UI():
 
 UI.menu()
         
-
