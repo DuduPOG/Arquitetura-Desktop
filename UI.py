@@ -11,9 +11,9 @@ class UI():
         print("Bem-vindo ao sistema de Comercio Eletrônico!")
         print("---------------------------------------------")
         print("      \nO que você deseja fazer?\n")
-        print("   1. Abrir uma conta")
-        print("   2. Entrar no sistema")
-        print("   3. Sair do sistema\n")
+        print("   1. Abrir uma conta;")
+        print("   2. Entrar no sistema;")
+        print("   3. Sair do sistema.\n")
         op = int(input("Digite o número da opção desejada: "))
         print("")
         UI.main(op)
@@ -26,13 +26,13 @@ class UI():
             print("      Seja bem vindo, cliente !")
             print("-------------------------------------------")
             print("\nO que você deseja fazer?\n")
-            print("   1. Criar um carrinho de compras")
-            print("   2. Listar produtos disponiveis")
-            print("   3. Inserir produtos no carrinhos")
-            print("   4. vizualizar carrinho")
-            print("   5. Confirmar compra")
-            print("   6. Listar minhas compras")
-            print("   7. Deslogar\n")
+            print("   1. Criar um carrinho de compras;")
+            print("   2. Listar produtos disponiveis;")
+            print("   3. Inserir produtos no carrinhos;")
+            print("   4. vizualizar carrinho;")
+            print("   5. Confirmar compra;")
+            print("   6. Listar minhas compras;")
+            print("   7. Deslogar.\n")
             op = int(input("Digite o número da opção desejada: "))
             UI.main_estado(1,op)
             
@@ -44,21 +44,21 @@ class UI():
             print("      Bem-vindo administrador !")
             print("-------------------------------------------")
             print("\nO que você deseja fazer?\n")
-            print("   1. Listar as compras")
-            print("   2. Inserir cliente")
-            print("   3. Excluir cliente")
-            print("   4. Atualizar cliente")
-            print("   5. listar cliente \n")
-            print("   6. Inserir categoria")
-            print("   7. Excluir categoria")
-            print("   8. Atualizar categoria")
-            print("   9. listar categoria \n")
-            print("   10. Inserir produto")
-            print("   11. Excluir produto")
-            print("   12. Atualizar produto")
-            print("   13. listar produto")
-            print("   14. reajustar o preço dos produtos\n")
-            print("   15. Deslogar\n")
+            print("   1. Listar as compras;")
+            print("   2. Inserir cliente;")
+            print("   3. Excluir cliente;")
+            print("   4. Atualizar cliente;")
+            print("   5. listar cliente;\n")
+            print("   6. Inserir categoria;")
+            print("   7. Excluir categoria;")
+            print("   8. Atualizar categoria;")
+            print("   9. listar categoria;\n")
+            print("   10. Inserir produto;")
+            print("   11. Excluir produto;")
+            print("   12. Atualizar produto;")
+            print("   13. listar produto;")
+            print("   14. reajustar o preço dos produtos;\n")
+            print("   15. Deslogar.\n")
             op = int(input("Digite o número da opção desejada: "))
             if not UI.main_estado(estado, op):
                 break
@@ -290,7 +290,7 @@ class UI():
     #CRUD de Venda
     @classmethod
     def iniciar_compra(cls):#Create
-        View.iniciar_carrinho(cls)
+        cls.carrinho = View.iniciar_carrinho()
 
 
     @staticmethod
@@ -300,7 +300,7 @@ class UI():
 
     @classmethod
     def visualizar_carrinho(cls):#Read
-        cls.carrinho = View.visualizar_carrinho(cls)
+        View.visualizar_carrinho(cls.carrinho)
 
 
     @classmethod

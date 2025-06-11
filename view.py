@@ -85,10 +85,10 @@ class View:
         return Produtos.listar()
     
     @staticmethod
-    def iniciar_carrinho(carrinho):
-        v = Venda(0)
-        Vendas.inserir(v)
-        carrinho = v
+    def iniciar_carrinho():
+        carrinho = Venda(0)
+        Vendas.inserir(carrinho)
+        return carrinho
     
     @staticmethod
     def listar_carrinho():

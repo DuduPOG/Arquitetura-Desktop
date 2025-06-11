@@ -199,7 +199,7 @@ class UI:
     #CRUD de Venda
     @classmethod
     def iniciar_compra(cls):#Create
-        View.iniciar_carrinho(cls)
+        cls.carrinho = View.iniciar_carrinho()
 
 
     @staticmethod
@@ -209,7 +209,7 @@ class UI:
 
     @classmethod
     def visualizar_carrinho(cls):#Read
-        View.visualizar_carrinho(cls)
+        View.visualizar_carrinho(cls.carrinho)
 
 
     @classmethod
