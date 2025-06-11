@@ -181,6 +181,7 @@ class UI():
         UI.cliente_listar()
         id = int(input("\nInforme o ID do cliente que será excluído: \n"))
         View.cliente_excluir(id)
+        View.login_excluir(id)
 
 
     @staticmethod
@@ -372,7 +373,10 @@ class UI():
                 if nome == "admin" and senha == "admin":
                     return UI.menu_estado(2)
                 else:
-                    return UI.menu_estado(1)
+                    if nome == usuario.get_user() and senha == usuario.get_password():
+                        id_do_cliente = usuario.get_id()
+                        UI.id_cliente(id_do_cliente)
+                        return UI.menu_estado(1)
                 
                #return  # Interrompe após login bem-sucedido
 
@@ -412,6 +416,11 @@ class UI():
     def voltar_menu_visita():
             print("\nConta criada com sucesso")
             UI.menu()
+
+    @staticmethod
+    def id_cliente(id):
+        id_cliente = id
+        return id_cliente
 
 
 UI.menu()

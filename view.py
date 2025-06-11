@@ -166,8 +166,14 @@ class View:
 
     @staticmethod
     def login_excluir(id):
-        l = Login(id, "", "")
-        Logins.excluir(l)
+        login = Logins.listar_id(id)
+        if login is not None:
+            Clientes.excluir(login)
+        else:
+            print("login não encontrado!")
+            return
+        
+
 
     @staticmethod
     def login_atualizar(id, email, senha):
