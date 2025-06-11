@@ -292,13 +292,13 @@ class UI():
 
 
     @staticmethod
-    def listar_compras():#Read
+    def listar_carrinho():#Read
         View.listar_carrinho()
 
 
     @classmethod
     def visualizar_carrinho(cls):#Read
-        View.visualizar_carrinho(cls)
+        cls.carrinho = View.visualizar_carrinho(cls)
 
 
     @classmethod
@@ -308,20 +308,14 @@ class UI():
             id_produto = int(input("Informe o id do produto desejado: "))
             qtd = int(input("Informe a quantidade desejada: "))
             View.inserir_no_carrinho(cls.carrinho, id_produto, qtd)
-            """
-            preco = float(Produtos.listar_id(id_produto).preco)
-            vi = VendaItem(0, qtd, preco)
-            vi.id_venda = cls.carrinho.id
-            vi.id_produto = id_produto
-            VendaItens.inserir(vi)
-            #atualizar o total da venda (carrinho)
-            subtotal = qtd * preco
-            cls.carrinho.total += subtotal
-            Vendas.atualizar(cls.carrinho)
-            """
         else:
             print("Você precisa criar um carrinho primeiro!")
             return
+        
+    @classmethod
+    def listar_minhas_compras(cls):
+        print("Estas são todas suas compras feitas:")
+        View.listar_minhas_compras(cls)
 
     @classmethod
     def confirmar_compra(cls):
