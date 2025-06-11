@@ -87,7 +87,7 @@ class UI():
         if estado == 1:
             op = UI.menu_estado(None)
             if op == 1:
-                UI.listar_compras()
+                UI.iniciar_compra()
                 UI.voltar_menu()
             elif op == 2:
                 UI.produto_listar()
@@ -102,7 +102,7 @@ class UI():
                 UI.confirmar_compra()
                 UI.voltar_menu()
             elif op == 6:
-                UI.listar_carrinho()
+                UI.listar_minhas_compras()
                 UI.voltar_menu()
             elif op == 7:
                 UI.deslogar()
@@ -156,6 +156,8 @@ class UI():
                 UI.reajustar_preco_produto()
                 UI.voltar_menu()
             elif op == 15:
+                UI.listar_carrinho()
+            elif op == 16:
                 UI.deslogar()
                 
             else:
