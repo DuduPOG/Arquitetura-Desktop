@@ -73,11 +73,13 @@ class Vendas:
     objetos = []
 
     @classmethod
-    def inserir(cls, obj,id_cliente):
+    def inserir(cls, obj):
         cls.abrir()
-        if obj.get_id() < 0 or obj.get_id() == "":
-            raise ValueError("ID não pode ser negativo nem vazio")
-        obj.set_id_cliente(id_cliente)
+        if cls.objetos:
+            maior = max(item.get_id() for item in cls.objetos)
+            obj.set_id(maior + 1)
+        else:
+            obj.set_id(0)
         cls.objetos.append(obj)
         cls.salvar()
 

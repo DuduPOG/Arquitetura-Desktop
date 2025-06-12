@@ -61,7 +61,7 @@ class UI():
             print("   14. reajustar o preço dos produtos\n")
             print("   15. Deslogar\n")
             op = int(input("Digite o número da opção desejada: "))
-            if not UI.main_estado(estado, op):
+            if not UI.main_estado(estado, op, id_do_cliente):
                 break
 #----------------------------------------------------------------      
 # Método para gerenciar o menu do visitante
@@ -88,7 +88,7 @@ class UI():
         id_do_cliente = id_do_cliente
         if estado == 1:
             if op == 1:
-                UI.iniciar_compra(id_do_cliente)
+                UI.iniciar_compra()
                 UI.voltar_menu(1,id_do_cliente)
             elif op == 2:
                 UI.produto_listar()
@@ -117,52 +117,51 @@ class UI():
         if estado == 2:
             if op == 1:
                 UI.listar_compras()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 2:
                 UI.cliente_inserir()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 3:
                 UI.cliente_excluir()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 4:
                 UI.cliente_atualizar()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 5:
                 UI.cliente_listar()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 6:
                 UI.categoria_inserir()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 7:
                 UI.categoria_excluir()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 8:
                 UI.categoria_atualizar()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 9:
                 UI.categoria_listar()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 10:
                 UI.produto_inserir()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 11:
                 UI.produto_excluir()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 12:
                 UI.produto_atualizar()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 13:
                 UI.produto_listar()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 14:
                 UI.reajustar_preco_produto()
-                UI.voltar_menu(2)
+                UI.voltar_menu(2, 0)
             elif op == 15:
                 UI.deslogar()
-                
             else:
                 print("Opção inválida. Tente novamente.")
-                UI.menu_estado(estado)
+                UI.menu_estado(estado, 0)
    
 
 #----------------------------------------------------------------------
@@ -293,8 +292,8 @@ class UI():
 
     #CRUD de Venda
     @classmethod
-    def iniciar_compra(cls,id):#Create
-        cls.carrinho = View.iniciar_carrinho(id)
+    def iniciar_compra(cls):#Create
+        cls.carrinho = View.iniciar_carrinho()
 
     @staticmethod
     def listar_compras():#Read
@@ -372,7 +371,7 @@ class UI():
         for usuario in View.login_listar():
             if usuario.get_user() == nome and usuario.get_password() == senha:
                 if nome == "admin" and senha == "admin":
-                    return UI.menu_estado(2)
+                    return UI.menu_estado(2, 0)
                 else:
                     if nome == usuario.get_user() and senha == usuario.get_password():
                         id_do_cliente = usuario.get_id()
@@ -395,19 +394,10 @@ class UI():
         print("saindo do sistema...")
         sys.exit()
 
-#admin 
-    @staticmethod
-    def listar_compras():
-        View.listar_carrinho()
+#admin
 
     @staticmethod
-    def listar_compras():
-        View.listar_carrinho()
-
-    
-
-    @staticmethod
-    def voltar_menu(estado,id):
+    def voltar_menu(estado, id):
         id = id
         resposta = input("\nDeseja voltar ao menu? (s/n)\n")
         if resposta == "s" :
