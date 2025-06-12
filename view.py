@@ -161,7 +161,7 @@ class View:
             if item.get_id_venda() == carrinho.get_id():
                 produto = Produtos.listar_id(item.get_id_produto())
                 if produto is not None:
-                    produto.set_estoque(produto.get_estoque() - item.get_qtd())
+                    produto.set_estoque(produto.get_estoque() + item.get_qtd())
                     Produtos.atualizar(produto)
 
     @staticmethod
