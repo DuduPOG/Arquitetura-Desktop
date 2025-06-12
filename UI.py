@@ -395,7 +395,7 @@ class UI():
     def deslogar():
         print("Deslogando...")
         estado = 0
-        UI.main(estado)
+        UI.menu()
 
     @staticmethod
     def sair_sistema():
