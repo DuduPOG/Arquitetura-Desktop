@@ -151,6 +151,20 @@ class View:
                     Produtos.atualizar(produto)
 
     @staticmethod
+    def desconfirmar_compra(carrinho):
+        if carrinho.get_carrinho() is True:
+            print("Esta compra ainda não foi acabada!")
+            return
+        carrinho.set_carrinho(True)
+        Vendas.atualizar(carrinho)
+        for item in VendaItens.listar():
+            if item.get_id_venda() == carrinho.get_id():
+                produto = Produtos.listar_id(item.get_id_produto())
+                if produto is not None:
+                    produto.set_estoque(produto.get_estoque() - item.get_qtd())
+                    Produtos.atualizar(produto)
+
+    @staticmethod
     def produto_reajustar_preco(produto, novo_preco):
         produto = Produtos.listar_id(produto)
         if produto is not None:

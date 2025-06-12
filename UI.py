@@ -14,8 +14,8 @@ class UI():
         print("   1. Abrir uma conta")
         print("   2. Entrar no sistema")
         print("   3. Sair do sistema\n")
-        op = int(input("Digite o número da opção desejada: \n"))
-        print("")
+        op = int(input("Digite o número da opção desejada: "))
+        print()
         UI.main(op)
     
     @staticmethod
@@ -33,7 +33,8 @@ class UI():
             print("   4. vizualizar carrinho")
             print("   5. Confirmar compra")
             print("   6. Listar minhas compras")
-            print("   7. Deslogar\n")
+            print("   7. Desconfirmar compra")
+            print("   8. Deslogar\n")
             op = int(input("Digite o número da opção desejada: "))
             UI.main_estado(1, op,id_do_cliente)
             
@@ -106,6 +107,9 @@ class UI():
                 UI.listar_compras()
                 UI.voltar_menu(1,id_do_cliente)
             elif op == 7:
+                UI.desconfirmar_compra()
+                UI.voltar_menu(1, id_do_cliente) 
+            elif op == 8:
                 UI.deslogar()
             else:
                 print("Opção inválida. Tente novamente.")
@@ -330,6 +334,10 @@ class UI():
     @classmethod
     def confirmar_compra(cls):
         View.confirmar_compra(cls.carrinho)
+
+    @classmethod
+    def desconfirmar_compra(cls):
+        View.desconfirmar_compra(cls.carrinho)
     
 
 #----------------------------------------------------------------------
