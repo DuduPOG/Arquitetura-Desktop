@@ -8,7 +8,7 @@ class Venda:
         self.set_data(datetime.now())
         self.set_carrinho(True)
         self.set_total(0)
-        self.set_id_cliente(0)
+        self.set_id_cliente(id_cliente=0)
 
     def to_json(self):
         return {
@@ -73,13 +73,11 @@ class Vendas:
     objetos = []
 
     @classmethod
-    def inserir(cls, obj):
+    def inserir(cls, obj,id_cliente):
         cls.abrir()
-        if cls.objetos:
-            maior = max(venda.get_id() for venda in cls.objetos)
-            obj.set_id(maior + 1)
-        else:
-            obj.set_id(0)
+        if obj.get_id() < 0 or obj.get_id() == "":
+            raise ValueError("ID não pode ser negativo nem vazio")
+        obj.set_id_cliente(id_cliente)
         cls.objetos.append(obj)
         cls.salvar()
 

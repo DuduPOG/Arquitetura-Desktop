@@ -14,13 +14,14 @@ class UI():
         print("   1. Abrir uma conta")
         print("   2. Entrar no sistema")
         print("   3. Sair do sistema\n")
-        op = int(input("Digite o número da opção desejada: "))
+        op = int(input("Digite o número da opção desejada: \n"))
         print("")
         UI.main(op)
     
     @staticmethod
-    def menu_estado(estado):
+    def menu_estado(estado,id):
         # Loop para o cliente
+        id_do_cliente = id
         while estado == 1:
             print("-------------------------------------------")
             print("      Seja bem vindo, cliente !")
@@ -34,7 +35,7 @@ class UI():
             print("   6. Listar minhas compras")
             print("   7. Deslogar\n")
             op = int(input("Digite o número da opção desejada: "))
-            UI.main_estado(1, op)
+            UI.main_estado(1, op,id_do_cliente)
             
         
         # Loop para o administrador
@@ -83,31 +84,32 @@ class UI():
                   
 # metodo para gerenciar o menu do cliente e admin
     @staticmethod
-    def main_estado(estado, op):
+    def main_estado(estado, op, id_do_cliente):
+        id_do_cliente = id_do_cliente
         if estado == 1:
             if op == 1:
-                UI.iniciar_compra()
-                UI.voltar_menu(1)
+                UI.iniciar_compra(id_do_cliente)
+                UI.voltar_menu(1,id_do_cliente)
             elif op == 2:
                 UI.produto_listar()
-                UI.voltar_menu(1)
+                UI.voltar_menu(1,id_do_cliente)
             elif op == 3:
                 UI.inserir_no_carrinho()
-                UI.voltar_menu(1)
+                UI.voltar_menu(1,id_do_cliente)
             elif op == 4:
                 UI.visualizar_carrinho()
-                UI.voltar_menu(1)
+                UI.voltar_menu(1,id_do_cliente)
             elif op == 5:
                 UI.confirmar_compra()
-                UI.voltar_menu(1)
+                UI.voltar_menu(1,id_do_cliente)
             elif op == 6:
-                UI.listar_minhas_compras()
-                UI.voltar_menu(1)
+                UI.listar_compras()
+                UI.voltar_menu(1,id_do_cliente)
             elif op == 7:
                 UI.deslogar()
             else:
                 print("Opção inválida. Tente novamente.")
-                UI.menu_estado(estado)
+                UI.menu_estado(estado, id_do_cliente)
 
             
 
@@ -291,9 +293,8 @@ class UI():
 
     #CRUD de Venda
     @classmethod
-    def iniciar_compra(cls):#Create
-        cls.carrinho = View.iniciar_carrinho()
-
+    def iniciar_compra(cls,id):#Create
+        cls.carrinho = View.iniciar_carrinho(id)
 
     @staticmethod
     def listar_compras():#Read
@@ -375,8 +376,8 @@ class UI():
                 else:
                     if nome == usuario.get_user() and senha == usuario.get_password():
                         id_do_cliente = usuario.get_id()
-                        UI.id_cliente(id_do_cliente)
-                        return UI.menu_estado(1)
+                        return UI.menu_estado(1, id_do_cliente)
+                    
                 
                #return  # Interrompe após login bem-sucedido
 
@@ -400,27 +401,29 @@ class UI():
         View.listar_carrinho()
 
     @staticmethod
-    def voltar_menu(estado):
+    def listar_compras():
+        View.listar_carrinho()
+
+    
+
+    @staticmethod
+    def voltar_menu(estado,id):
+        id = id
         resposta = input("\nDeseja voltar ao menu? (s/n)\n")
         if resposta == "s" :
-            UI.menu_estado(estado)
+            UI.menu_estado(estado,id)
         elif resposta == "n":
-            UI.sair_sistema(
-
-            )
+            UI.sair_sistema()
         else:
             print("\nResposta invalida")
-            UI.voltar_menu()
+            UI.voltar_menu(estado,id)
     
     @staticmethod
     def voltar_menu_visita():
             print("\nConta criada com sucesso")
             UI.menu()
 
-    @staticmethod
-    def id_cliente(id):
-        id_cliente = id
-        return id_cliente
 
+  
 
 UI.menu()
